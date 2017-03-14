@@ -4,7 +4,7 @@ KBBI Qt adalah aplikasi **Kamus Besar Bahasa Indonesia** luar jaringan (_offline
 
 KBBI Qt membutuhkan dependensi Qt versi 4 atau yang lebih tinggi (Qt5).
 
-Apabila menggunakan Qt5, _file_ <code>kbbi-qt.SlackBuild</code> baris [ke-79](https://github.com/sasongko26/kbbi-qt-slackbuild/blob/master/kbbi-qt.SlackBuild#L79)
+Apabila menggunakan Qt5, _file_ <code>kbbi-qt.SlackBuild</code>,
 
 <code>qmake</code> silakan diganti dengan <code>qmake-qt5</code>. 
 
