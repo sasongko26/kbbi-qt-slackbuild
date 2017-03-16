@@ -31,7 +31,7 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_bgli}
 PKGTYPE=${PKGTYPE:-tgz}
 
-#wget -c https://github.com/bgli/kbbi-qt/archive/v$VERSION.tar.gz
+wget -c https://github.com/bgli/kbbi-qt/archive/v$VERSION.tar.gz
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
