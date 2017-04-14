@@ -27,9 +27,10 @@
 
 PRGNAM=kbbi-qt
 VERSION="1.1"
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_bgli}
 PKGTYPE=${PKGTYPE:-tgz}
+MAKEFLAGS="-j$(( $(nproc) + 1 ))"
 
 wget -c https://github.com/bgli/kbbi-qt/archive/v$VERSION.tar.gz
 
@@ -83,10 +84,12 @@ find . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
+sed -i "s|/usr|$PKG/usr|" KBBI-Qt.pro
 sed -i "s|share/doc/\$\$TARGET|doc/$PRGNAM-$VERSION|" KBBI-Qt.pro
 qmake KBBI-Qt.pro
-make 
-make clean install DESTDIR=$PKG
+make
+make install DESTDIR=$PKG
+
 
 # Strip binaries and libraries - this can be done with 'make install-strip'
 # in many source trees, and that's usually acceptable if so, but if not,
