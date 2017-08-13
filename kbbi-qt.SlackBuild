@@ -53,15 +53,15 @@ echo -n "  MD5SUM check for $PRGNAM-$VERSION ... "
 if [[ $MD5CHK == $MD5SUM ]]; then
 	echo "OK"
 else
-  	echo "FAILED!"
-        echo "    Expected: $MD5SUM" 
-        echo "    Found:    $MD5CHK"
-        # Ask the user what to do with the bad source
-        while :; do
-        	wget $SRCURL
-	done
+  	cat << EOF
+	FAILED!
+        	Expected: $MD5SUM 
+        	Found:    $MD5CHK
+	Please download the source and replace to current directory
+	Download URL : $SRCURL
+EOF
+        exit 
 fi
-
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
