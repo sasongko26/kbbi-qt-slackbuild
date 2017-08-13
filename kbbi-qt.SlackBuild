@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Slackware build script for kbbi-qt
- 
+
 # Copyright 2017  Sasongko Bawono <sasongko262@gmail.com>
 
 # All rights reserved.
@@ -32,10 +32,36 @@ TAG=${TAG:-_bgli}
 PKGTYPE=${PKGTYPE:-tgz}
 MAKEFLAGS="-j$(( $(nproc) + 1 ))"
 
+CWD=$(pwd)
+TMP=${TMP:-/tmp/bgli}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+
 SRCVER=${SRCVER:-20170813}
 SRCURL=${SRCURL:-https://github.com/sasongko26/$PRGNAM/archive/$SRCVER/$PRGNAM-$SRCVER.tar.gz}
 
+# Download source
+echo "Downloading..."
 wget -c $SRCURL
+
+# Check MD5
+echo "Checking MD5SUM:"
+MD5SUM=${MD5SUM:-31985790689526d99df7249d276da2d9}
+MD5CHK=$(md5sum "$CWD/$PRGNAM-$SRCVER.tar.gz" | cut -d' ' -f1)
+echo -n "  MD5SUM check for $PRGNAM-$VERSION ... "
+if [[ $MD5CHK == $MD5SUM ]]; then
+	echo "OK"
+else
+  	echo "FAILED!"
+        echo "    Expected: $MD5SUM" 
+        echo "    Found:    $MD5CHK"
+        # Ask the user what to do with the bad source
+        while :; do
+        	wget $SRCURL
+	done
+fi
+
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -44,11 +70,6 @@ if [ -z "$ARCH" ]; then
        *) export ARCH=$( uname -m ) ;;
   esac
 fi
-
-CWD=$(pwd)
-TMP=${TMP:-/tmp/bgli}
-PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
@@ -71,7 +92,13 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 mkdir -p $PRGNAM-$VERSION
+echo "Extracting..."
 tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz -C $TMP/$PRGNAM-$VERSION --strip-component=1
+
+cat << EOF
+Building $PRGNAM-$VERSION ...
+
+EOF
 
 cd $TMP/$PRGNAM-$VERSION
 chown -R root:root .
