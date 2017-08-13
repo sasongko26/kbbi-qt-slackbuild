@@ -2,7 +2,7 @@
 
 # Slackware build script for kbbi-qt
  
-# Copyright 2016  Sasongko Bawono <sasongko262@gmail.com>
+# Copyright 2017  Sasongko Bawono <sasongko262@gmail.com>
 
 # All rights reserved.
 #
@@ -26,12 +26,14 @@
 # -----------------------------------------------------------------------------
 
 PRGNAM=kbbi-qt
-VERSION="1.1"
+VERSION=${VERSION:-1.1}
 BUILD=${BUILD:-3}
 TAG=${TAG:-_bgli}
 PKGTYPE=${PKGTYPE:-tgz}
 MAKEFLAGS="-j$(( $(nproc) + 1 ))"
-SRCURL=${SRCURL:-https://github.com/bgli/$PRGNAM/archive/v$VERSION/$PRGNAM-$VERSION.tar.gz}
+
+SRCVER=${SRCVER:-20170813}
+SRCURL=${SRCURL:-https://github.com/sasongko26/$PRGNAM/archive/$SRCVER/$PRGNAM-$SRCVER.tar.gz}
 
 wget -c $SRCURL
 
@@ -68,7 +70,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+mkdir -p $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz -C $TMP/$PRGNAM-$VERSION --strip-component=1
 
 cd $TMP/$PRGNAM-$VERSION
 chown -R root:root .
