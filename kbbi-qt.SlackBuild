@@ -27,12 +27,13 @@
 
 PRGNAM=kbbi-qt
 VERSION="1.1"
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_bgli}
 PKGTYPE=${PKGTYPE:-tgz}
 MAKEFLAGS="-j$(( $(nproc) + 1 ))"
+SRCURL=${SRCURL:-https://github.com/bgli/$PRGNAM/archive/v$VERSION/$PRGNAM-$VERSION.tar.gz}
 
-wget -c https://github.com/bgli/kbbi-qt/archive/v$VERSION.tar.gz
+wget -c $SRCURL
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -67,15 +68,9 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-if [ -x $CWD/$PRGNAM-$VERSION.tar.gz ]
-then
-	tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-else
-	mkdir -p $PRGNAM-$VERSION
-	tar xvf $CWD/v$VERSION.tar.gz
-fi
-cd $TMP/$PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 
+cd $TMP/$PRGNAM-$VERSION
 chown -R root:root .
 
 find . \
@@ -123,9 +118,9 @@ find $PKG -name perllocal.pod \
 # to adjust your script as needed
 # Also, include the SlackBuild script in the documentation directory
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-#cp -a \
-#  AUTHORS LICENSE README.md \
-#  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  AUTHORS LICENSE README.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 
