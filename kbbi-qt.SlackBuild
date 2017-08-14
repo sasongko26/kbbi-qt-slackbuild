@@ -26,8 +26,8 @@
 # -----------------------------------------------------------------------------
 
 PRGNAM=kbbi-qt
-VERSION=${VERSION:-1.1}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-1.2_alpha1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_bgli}
 PKGTYPE=${PKGTYPE:-tgz}
 MAKEFLAGS="-j$(( $(nproc) + 1 ))"
@@ -38,8 +38,8 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 
-SRCVER=${SRCVER:-20170813}
-SRCURL=${SRCURL:-https://github.com/sasongko26/$PRGNAM/archive/$SRCVER/$PRGNAM-$SRCVER.tar.gz}
+SRCVER=${SRCVER:-1.2-alpha1}
+SRCURL=${SRCURL:-https://github.com/sasongko26/$PRGNAM/archive/v$SRCVER/$PRGNAM-$SRCVER.tar.gz}
 
 # Download source
 echo "Downloading..."
@@ -47,7 +47,7 @@ wget -c $SRCURL
 
 # Check MD5
 echo "Checking MD5SUM:"
-MD5SUM=${MD5SUM:-31985790689526d99df7249d276da2d9}
+MD5SUM=${MD5SUM:-1e8a653317da09b1a5ea30b17c940865}
 MD5CHK=$(md5sum "$CWD/$PRGNAM-$SRCVER.tar.gz" | cut -d' ' -f1)
 echo -n "  MD5SUM check for $PRGNAM-$VERSION ... "
 if [[ $MD5CHK == $MD5SUM ]]; then
